@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdint.h>
 
 // Node Structure
 typedef struct HashNode {
@@ -66,16 +67,91 @@ void service_info_free(ServiceInfo *info) {
     free(info);
 }
 
-// TODO: implement hashtable_insert, hashtable_lookup, hash function, etc.
-bool hashtable_insert(HashTable *ht, const char *name, const ServiceInfo *info) {
-    // Placeholder — we will fill this next
-    (void)ht; (void)name; (void)info;
-    fprintf(stderr, "hashtable_insert not implemented yet\n");
-    return false;
+// ==================== HASH FUNCTION ==================== 
+// FNV-1a HASH
+// (https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function)
+static uint32_t fnv1a_hash(const char *str) {
+    uint32_t hash = 0x811C9DC5; // OFFSET
+    while (*str) {
+        hash ^= (uint32_t)(*str++);
+        hash *= 0x01000193;     // PRIME
+    }
+    return hash;
 }
 
+
+// ==================== Deep Copy  ==================== 
+static ServiceInfo *service_info_dup(const ServiceInfo *src) {
+    if (!src) return NULL;
+
+    ServiceInfo *dest = malloc(sizeof(ServiceInfo));
+    if (!dest) return NULL;
+
+    dest->name = src->name ? strdup(src->name) : NULL;
+    dest->config_path = src->config_path ? strdup(src->config_path) : NULL;
+    dest->description = src->description ? strdup(src->description) : NULL;
+    dest->status = src->status ? strdup(src->status) : NULL;
+
+    // Copy extra_paths if present
+    if (src->extra_paths) {
+        int count = 0;
+        while (src->extra_paths[count]) count++;
+        dest->extra_paths = malloc((count + 1) * sizeof(char *));
+        for (int i = 0; i < count; i++) {
+            dest->extra_paths[i] = strdup(src->extra_paths[i]);
+        }
+        dest->extra_paths[count] = NULL;
+    } else {
+        dest->extra_paths = NULL;
+    }
+
+    return dest;
+}
+
+// ====================== INSERT ======================
+bool hashtable_insert(HashTable *ht, const char *name, const ServiceInfo *info) {
+    if (!ht || !name || !info) return false;
+
+    uint32_t index = fnv1a_hash(name) % ht->capacity;
+
+    // Check if key already exists (update instead of duplicate)
+    HashNode *node = ht->buckets[index];
+    while (node) {
+        if (strcmp(node->key, name) == 0) {
+            // Update existing entry
+            service_info_free(node->info);
+            node->info = service_info_dup(info);
+            return true;
+        }
+        node = node->next;
+    }
+
+    // Create new node
+    HashNode *new_node = malloc(sizeof(HashNode));
+    if (!new_node) return false;
+
+    new_node->key = strdup(name);
+    new_node->info = service_info_dup(info);
+    new_node->next = ht->buckets[index];   // Insert at head (chaining)
+    ht->buckets[index] = new_node;
+
+    ht->size++;
+    return true;
+}
+
+// ====================== LOOKUP ======================
 ServiceInfo *hashtable_lookup(const HashTable *ht, const char *name) {
-    // Placeholder
-    (void)ht; (void)name;
+    if (!ht || !name) return NULL;
+
+    uint32_t index = fnv1a_hash(name) % ht->capacity;
+
+    HashNode *node = ht->buckets[index];
+    while (node) {
+        if (strcmp(node->key, name) == 0) {
+            return node->info;   // Return pointer to stored info
+        }
+        node = node->next;
+    }
     return NULL;
 }
+
