@@ -26,7 +26,10 @@ bool hashtable_insert(HashTable *ht, const char *name, const ServiceInfo *info);
 // Exact Look-up
 ServiceInfo *hashtable_lookup(const HashTable *ht, const char *name);
 
-// TODO (DSA): Prefix/partial match search, delete, resize
+// === Getters 
+size_t get_hashtable_size(const HashTable *ht);      // number of entries
+size_t get_hashtable_capacity(const HashTable *ht);  // current table size
+float  get_hashtable_load_factor(const HashTable *ht);
 
 // toFREE
 void service_info_free(ServiceInfo *info);

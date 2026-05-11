@@ -19,6 +19,20 @@ struct HashTable {
     // TODO load factor, resize threshhold
 };
 
+// ====================== GETTERS (interface) ===========================
+size_t get_hashtable_size(const HashTable *ht) {
+    return ht ? ht->size : 0;
+}
+
+size_t get_hashtable_capacity(const HashTable *ht) {
+    return ht ? ht->capacity : 0;
+}
+
+float get_hashtable_load_factor(const HashTable *ht) {
+    if (!ht || ht->capacity == 0) return 0.0f;
+    return (float)ht->size / ht->capacity;
+}
+
 HashTable *hashtable_create(size_t initial_capacity) {
     if (initial_capacity < 8) initial_capacity = 8;
 
@@ -79,6 +93,38 @@ static uint32_t fnv1a_hash(const char *str) {
     return hash;
 }
 
+// ====================== LOAD FACTOR & RESIZE HELPERS (DSA Core) ======================
+static float hashtable_load_factor(const HashTable *ht) {
+    return (ht->size == 0) ? 0.0f : (float)ht->size / ht->capacity;
+}
+
+static bool hashtable_resize(HashTable *ht) {
+    if (hashtable_load_factor(ht) <= 0.7f) return true;   // No need to resize
+
+    size_t new_capacity = ht->capacity * 2;
+    HashNode **new_buckets = calloc(new_capacity, sizeof(HashNode *));
+    if (!new_buckets) return false;
+
+    // Rehash all existing entries
+    for (size_t i = 0; i < ht->capacity; i++) {
+        HashNode *node = ht->buckets[i];
+        while (node) {
+            HashNode *next = node->next;
+            uint32_t new_index = fnv1a_hash(node->key) % new_capacity;
+
+            // Insert into new table
+            node->next = new_buckets[new_index];
+            new_buckets[new_index] = node;
+
+            node = next;
+        }
+    }
+
+    free(ht->buckets);
+    ht->buckets = new_buckets;
+    ht->capacity = new_capacity;
+    return true;
+}
 
 // ==================== Deep Copy  ==================== 
 static ServiceInfo *service_info_dup(const ServiceInfo *src) {
@@ -112,13 +158,19 @@ static ServiceInfo *service_info_dup(const ServiceInfo *src) {
 bool hashtable_insert(HashTable *ht, const char *name, const ServiceInfo *info) {
     if (!ht || !name || !info) return false;
 
+    // Resize if needed before inserting
+    if (hashtable_load_factor(ht) > 0.7f) {
+        if (!hashtable_resize(ht)) {
+            fprintf(stderr, "Warning: Failed to resize hash table\n");
+        }
+    }
+
     uint32_t index = fnv1a_hash(name) % ht->capacity;
 
-    // Check if key already exists (update instead of duplicate)
+    // Check for existing key → update
     HashNode *node = ht->buckets[index];
     while (node) {
         if (strcmp(node->key, name) == 0) {
-            // Update existing entry
             service_info_free(node->info);
             node->info = service_info_dup(info);
             return true;
@@ -132,7 +184,7 @@ bool hashtable_insert(HashTable *ht, const char *name, const ServiceInfo *info) 
 
     new_node->key = strdup(name);
     new_node->info = service_info_dup(info);
-    new_node->next = ht->buckets[index];   // Insert at head (chaining)
+    new_node->next = ht->buckets[index];
     ht->buckets[index] = new_node;
 
     ht->size++;
