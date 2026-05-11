@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -O2 -std=c11 -Iinclude
+CFLAGS = -Wall -Wextra -O2 -std=c11 -D_POSIX_C_SOURCE=200809L -Iinclude
 LDFLAGS = 
 
 all: syskin
