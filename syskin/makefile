@@ -4,7 +4,7 @@ LDFLAGS =
 
 all: syskin
 
-syskin: src/syskin.o src/hashtable.o src/hashtable.o
+syskin: src/syskin.o src/hashtable.o src/hashtable.o src/storage.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Tests
@@ -12,11 +12,17 @@ test: tests/test_hashtable.o src/hashtable.o
 	$(CC) $(CFLAGS) -o tests/test_hashtable $^ $(LDFLAGS)
 	./tests/test_hashtable
 
+test-storage: tests/test_storage.o src/hashtable.o src/storage.o
+	$(CC) $(CFLAGS) -o tests/test_storage $^ $(LDFLAGS)
+	./tests/test_storage
+
+test: test-storage
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f src/*.o syskin tests/*.o syskin tests/test_hashtable
+	rm -f src/*.o tests/*.o syskin tests/test_hashtable
 
 install: syskin
 	sudo cp syskin /usr/local/bin

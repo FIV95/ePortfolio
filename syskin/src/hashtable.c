@@ -207,3 +207,16 @@ ServiceInfo *hashtable_lookup(const HashTable *ht, const char *name) {
     return NULL;
 }
 
+// ForEach
+void hashtable_for_each(const HashTable *ht, HashTableForEachFunc func, void *user_data) {
+    if (!ht || !func) return;
+
+    for (size_t i = 0; i < ht->capacity; i++) {
+        HashNode *node = ht->buckets[i];
+        while (node) {
+            func(node->key, node->info, user_data);
+            node = node->next;
+        }
+    }
+}
+

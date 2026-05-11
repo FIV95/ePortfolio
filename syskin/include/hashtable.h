@@ -34,4 +34,10 @@ float  get_hashtable_load_factor(const HashTable *ht);
 // toFREE
 void service_info_free(ServiceInfo *info);
 
+// Iterator 
+typedef void (*HashTableForEachFunc)(const char *key, const ServiceInfo *info, void *user_data);
+
+// Application of function to every entry in the table
+void hashtable_for_each(const HashTable *ht, HashTableForEachFunc func, void *user_data);
+
 #endif

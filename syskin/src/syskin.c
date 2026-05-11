@@ -1,41 +1,47 @@
 #include "hashtable.h"
+#include "storage.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int main(void) {
-    printf("SysKin v0.3 - Linux Service Knowledge Base (with Dynamic Resizing)\n\n");
+    printf("SysKin v0.4 - Persistent Linux Service Knowledge Base\n\n");
 
-    HashTable *ht = hashtable_create(8);   // Small size to trigger resize
-    if (!ht) {
-        fprintf(stderr, "Failed to create hash table\n");
+    char *data_file = get_data_filepath();
+    if (!data_file) {
+        fprintf(stderr, "Failed to get data filepath\n");
         return 1;
     }
 
-    printf("Initial - Capacity: %zu, Size: %zu, Load: %.2f\n",
-           get_hashtable_capacity(ht), get_hashtable_size(ht), get_hashtable_load_factor(ht));
+    HashTable *ht = hashtable_create(16);
+    if (!ht) {
+        fprintf(stderr, "Failed to create hash table\n");
+        free(data_file);
+        return 1;
+    }
 
-    // Insert enough to trigger resize
-    for (int i = 0; i < 20; i++) {
-        char name[32];
-        snprintf(name, sizeof(name), "service%d", i);
+    printf("Data file: %s\n", data_file);
+
+    storage_load(ht, data_file);
+    printf("Loaded %zu services from disk\n", get_hashtable_size(ht));
+
+    // Add one service only if table is empty
+    if (get_hashtable_size(ht) == 0) {
         ServiceInfo info = {
-            .name = name,
-            .config_path = "/etc/service.conf",
+            .name = "nginx",
+            .config_path = "/etc/nginx/nginx.conf",
             .extra_paths = NULL,
-            .description = "Test service",
+            .description = "High performance web server",
             .status = "active"
         };
-        hashtable_insert(ht, name, &info);
+        hashtable_insert(ht, "nginx", &info);
+        printf("Added nginx service\n");
     }
 
-    printf("After inserts - Capacity: %zu, Size: %zu, Load: %.2f\n",
-           get_hashtable_capacity(ht), get_hashtable_size(ht), get_hashtable_load_factor(ht));
-
-    ServiceInfo *found = hashtable_lookup(ht, "service5");
-    if (found) {
-        printf("✅ Lookup successful: %s → %s\n", found->name, found->description);
-    }
+    storage_save(ht, data_file);
+    printf("Saved %zu services to %s\n", get_hashtable_size(ht), data_file);
 
     hashtable_destroy(ht);
-    printf("\nDynamic resizing + getters test completed successfully!\n");
+    free(data_file);
+    printf("\nPersistence test complete!\n");
     return 0;
 }
