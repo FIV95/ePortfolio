@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <ctype.h>
 
 // Node Structure
 typedef struct HashNode {
@@ -220,3 +221,70 @@ void hashtable_for_each(const HashTable *ht, HashTableForEachFunc func, void *us
     }
 }
 
+bool hashtable_delete(HashTable *ht, const char *name) {
+    if (!ht || !name) return false;
+
+    uint32_t index = fnv1a_hash(name) % ht->capacity;
+
+    HashNode **node_ptr = &ht->buckets[index];
+    HashNode *node = *node_ptr;
+
+    while (node) {
+        if (strcmp(node->key, name) == 0) {
+            *node_ptr = node->next;   // unlink
+
+            free(node->key);
+            service_info_free(node->info);
+            free(node);
+
+            ht->size--;
+            return true;
+        }
+        node_ptr = &node->next;
+        node = node->next;
+    }
+    return false;   // not found
+}
+
+// ====================== PARTIAL SEARCH (case-insensitive) ======================
+
+// Context struct so we can pass both the query *and* the callback through for_each
+typedef struct {
+    char *query;                          // lowered query string
+    void (*callback)(const ServiceInfo *info);
+} SearchContext;
+
+static void search_helper(const char *key, const ServiceInfo *info, void *user_data) {
+    (void)key;                            // suppress unused-parameter warning
+    SearchContext *ctx = (SearchContext *)user_data;
+
+    if (!ctx || !ctx->callback || !info || !info->name) return;
+
+    // lower-case the service name for case-insensitive search
+    char lower_name[256];
+    strncpy(lower_name, info->name, sizeof(lower_name)-1);
+    lower_name[sizeof(lower_name)-1] = '\0';
+    for (char *p = lower_name; *p; p++) {
+        *p = tolower((unsigned char)*p);
+    }
+
+    if (strstr(lower_name, ctx->query)) {
+        ctx->callback(info);
+    }
+}
+
+void hashtable_search(const HashTable *ht, const char *query, 
+                      void (*callback)(const ServiceInfo *info)) {
+    if (!ht || !query || !*query || !callback) return;
+
+    // lower-case the query once
+    char lower_query[256];
+    strncpy(lower_query, query, sizeof(lower_query)-1);
+    lower_query[sizeof(lower_query)-1] = '\0';
+    for (char *p = lower_query; *p; p++) {
+        *p = tolower((unsigned char)*p);
+    }
+
+    SearchContext ctx = { lower_query, callback };
+    hashtable_for_each(ht, search_helper, &ctx);
+}

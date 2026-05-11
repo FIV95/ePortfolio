@@ -26,6 +26,10 @@ bool hashtable_insert(HashTable *ht, const char *name, const ServiceInfo *info);
 // Exact Look-up
 ServiceInfo *hashtable_lookup(const HashTable *ht, const char *name);
 
+/// Partial/prefix search 
+void hashtable_search(const HashTable *ht, const char *query, 
+                      void (*callback)(const ServiceInfo *info));
+
 // === Getters 
 size_t get_hashtable_size(const HashTable *ht);      // number of entries
 size_t get_hashtable_capacity(const HashTable *ht);  // current table size
@@ -39,5 +43,7 @@ typedef void (*HashTableForEachFunc)(const char *key, const ServiceInfo *info, v
 
 // Application of function to every entry in the table
 void hashtable_for_each(const HashTable *ht, HashTableForEachFunc func, void *user_data);
+
+bool hashtable_delete(HashTable *ht, const char *name);
 
 #endif

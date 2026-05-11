@@ -4,7 +4,7 @@ LDFLAGS =
 
 all: syskin
 
-syskin: src/syskin.o src/hashtable.o src/hashtable.o src/storage.o
+syskin: src/syskin.o src/hashtable.o src/storage.o src/cli.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Tests

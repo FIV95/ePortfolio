@@ -19,7 +19,6 @@ char *get_data_filepath(void) {
 static void save_callback(const char *key, const ServiceInfo *info, void *user_data) {
     FILE *f = (FILE *)user_data;
     (void)key;
-
     fprintf(f, "  {\n");
     fprintf(f, "    \"name\": \"%s\",\n",        info->name ? info->name : "");
     fprintf(f, "    \"config_path\": \"%s\",\n", info->config_path ? info->config_path : "");
@@ -63,24 +62,28 @@ bool storage_load(HashTable *ht, const char *filepath) {
     printf("Loading services from %s...\n", filepath);
 
     char line[2048];
+    char name[256] = {0};
+    char config[512] = {0};
+    char desc[1024] = {0};
+    char status[128] = {0};
+
     while (fgets(line, sizeof(line), f)) {
-        char name[256] = {0};
+        if (strstr(line, "\"name\":")) sscanf(strstr(line, "\"name\":") + 8, " \"%[^\"]\"", name);
+        if (strstr(line, "\"config_path\":")) sscanf(strstr(line, "\"config_path\":") + 15, " \"%[^\"]\"", config);
+        if (strstr(line, "\"description\":")) sscanf(strstr(line, "\"description\":") + 15, " \"%[^\"]\"", desc);
+        if (strstr(line, "\"status\":")) sscanf(strstr(line, "\"status\":") + 10, " \"%[^\"]\"", status);
 
-        if (strstr(line, "\"name\":")) {
-            sscanf(strstr(line, "\"name\":") + 8, " \"%[^\"]\"", name);
+        if (strstr(line, "}") && strlen(name) > 0) {
+            ServiceInfo info = {0};
+            info.name        = strdup(name);
+            info.config_path = config[0] ? strdup(config) : NULL;
+            info.description = desc[0] ? strdup(desc) : NULL;
+            info.status      = status[0] ? strdup(status) : strdup("active");
+            info.extra_paths = NULL;
 
-            if (strlen(name) > 0) {
-                ServiceInfo info = {0};  // zero initialize
-                info.name = strdup(name);
-                info.config_path = strdup("/etc/default.conf");
-                info.description = strdup("Loaded from persistent storage");
-                info.status = strdup("active");
-                info.extra_paths = NULL;
+            hashtable_insert(ht, name, &info);
 
-                hashtable_insert(ht, name, &info);
-                // Do NOT call service_info_free here on stack struct
-                // insert already made its own deep copy
-            }
+            name[0] = config[0] = desc[0] = status[0] = '\0';
         }
     }
 
