@@ -6,7 +6,7 @@
 #include <string.h>
 
 int main(int argc, char *argv[]) {
-    printf("SysKin v0.5 - Persistent Linux Service Knowledge Base\n\n");
+    printf("SysKin v0.8 - Persistent Linux Service Knowledge Base\n\n");
 
     if (argc < 2 || strcmp(argv[1], "--help") == 0) {
         cli_print_usage(argv[0]);

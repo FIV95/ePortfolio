@@ -1,0 +1,19 @@
+# Build artifacts
+*.o
+syskin
+tests/test_hashtable
+tests/test_storage
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary / debug
+*.tmp
+core

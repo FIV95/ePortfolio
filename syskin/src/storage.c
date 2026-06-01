@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+// ====================== PRIVATE HELPERS ======================
 char *get_data_filepath(void) {
     const char *home = getenv("HOME");
     if (!home) return strdup("services.json");
@@ -16,20 +17,7 @@ char *get_data_filepath(void) {
     return path;
 }
 
-static void save_callback(const char *key, const ServiceInfo *info, void *user_data) {
-    FILE *f = (FILE *)user_data;
-    (void)key;
-    fprintf(f, "  {\n");
-    fprintf(f, "    \"name\": \"%s\",\n",        info->name ? info->name : "");
-    fprintf(f, "    \"config_path\": \"%s\",\n", info->config_path ? info->config_path : "");
-    fprintf(f, "    \"description\": \"%s\",\n", info->description ? info->description : "");
-    fprintf(f, "    \"status\": \"%s\"\n",       info->status ? info->status : "");
-    fprintf(f, "  },\n");
-}
-
-bool storage_save(const HashTable *ht, const char *filepath) {
-    if (!ht || !filepath) return false;
-
+static void ensure_directory(const char *filepath) {
     char *dir = strdup(filepath);
     char *last = strrchr(dir, '/');
     if (last) {
@@ -37,6 +25,33 @@ bool storage_save(const HashTable *ht, const char *filepath) {
         mkdir(dir, 0755);
     }
     free(dir);
+}
+
+static void save_callback(const char *key, const ServiceInfo *info, void *user_data) {
+    FILE *f = (FILE *)user_data;
+    (void)key;
+
+    fprintf(f, "  { \"name\": \"%s\", \"config_path\": \"%s\", \"description\": \"%s\", \"status\": \"%s\"",
+            info->name ? info->name : "",
+            info->config_path ? info->config_path : "",
+            info->description ? info->description : "",
+            info->status ? info->status : "");
+
+    if (info->extra_paths && info->extra_paths[0]) {
+        fprintf(f, ", \"extra_paths\": [");
+        for (int i = 0; info->extra_paths[i]; i++) {
+            fprintf(f, "\"%s\"%s", info->extra_paths[i], info->extra_paths[i+1] ? ", " : "");
+        }
+        fprintf(f, "]");
+    }
+    fprintf(f, " },\n");
+}
+
+// ====================== PUBLIC API ======================
+bool storage_save(const HashTable *ht, const char *filepath) {
+    if (!ht || !filepath) return false;
+
+    ensure_directory(filepath);
 
     FILE *f = fopen(filepath, "w");
     if (!f) return false;
@@ -79,7 +94,40 @@ bool storage_load(HashTable *ht, const char *filepath) {
             info.config_path = config[0] ? strdup(config) : NULL;
             info.description = desc[0] ? strdup(desc) : NULL;
             info.status      = status[0] ? strdup(status) : strdup("active");
+            // === Parse extra_paths (compact JSON) ===
             info.extra_paths = NULL;
+            char *extra_start = strstr(line, "\"extra_paths\"");
+            if (extra_start) {
+                extra_start = strchr(extra_start, '[');
+                if (extra_start) {
+                    extra_start++;  // skip '['
+
+                    char *paths[64] = {0};
+                    int path_count = 0;
+                    char *p = extra_start;
+
+                    while (*p && *p != ']' && path_count < 64) {
+                        if (*p == '"') {
+                            p++;
+                            char *end = strchr(p, '"');
+                            if (!end) break;
+                            *end = '\0';
+                            paths[path_count++] = strdup(p);
+                            p = end + 1;
+                        } else {
+                            p++;
+                        }
+                    }
+
+                    if (path_count > 0) {
+                        info.extra_paths = malloc((path_count + 1) * sizeof(char *));
+                        for (int i = 0; i < path_count; i++) {
+                            info.extra_paths[i] = paths[i];
+                        }
+                        info.extra_paths[path_count] = NULL;
+                    }
+                }
+            }
 
             hashtable_insert(ht, name, &info);
 
