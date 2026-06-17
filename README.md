@@ -19,11 +19,38 @@ This repository contains my capstone artifacts, milestone narratives, and code r
 
 ---
 
+## First-time setup (any machine)
+
+```bash
+git clone https://github.com/FIV95/ePortfolio.git
+cd ePortfolio
+```
+
+Local config files are not committed. Copy the examples and edit for your PostgreSQL user:
+
+```bash
+cp Database_Artifact/tech_shop/enhanced/ops/backup_config.env.example \
+   Database_Artifact/tech_shop/enhanced/ops/backup_config.env
+
+cp Database_Artifact/tech_shop/enhanced/api/.env.example \
+   Database_Artifact/tech_shop/enhanced/api/.env
+```
+
+**macOS (Homebrew PostgreSQL):** if `psql` is not on your PATH, set `PG_BIN_DIR` in `backup_config.env`:
+
+```bash
+PG_BIN_DIR=/opt/homebrew/opt/postgresql@17/bin
+```
+
+**Linux / Arch:** leave `PG_BIN_DIR` empty and ensure `psql` is installed (`postgresql` package).
+
+---
+
 ## Software Engineering & DSA — Syskin
 
 A POSIX C application that scans systemd unit files and stores discovered services in a hash table backed by JSON persistence.
 
-**Requirements:** `gcc`, `make`
+**Requirements:** `gcc`, `make`, Linux with systemd unit files under `/usr/lib/systemd/system`
 
 ```bash
 cd "Software_Engineering_&_DSA_Artifact/syskin"
@@ -41,11 +68,11 @@ Data is stored at `~/.syskin/services.json` (portable across machines via the ho
 
 A normalized PostgreSQL schema with security hardening, audit logging, baton workflow, and a role-scoped FastAPI front end.
 
-**Requirements:** PostgreSQL, Python 3.10+
+**Requirements:** PostgreSQL 17+, Python 3.10+
 
 ```bash
 cd Database_Artifact/tech_shop
-python -m venv venv && source venv/bin/activate
+python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 
 cd enhanced/ops
@@ -60,11 +87,12 @@ Open **http://127.0.0.1:8000/app** after starting the server. See `Database_Arti
 
 ---
 
-## Cloning on a new machine
+## Working across machines
 
-```bash
-git clone https://github.com/FIV95/ePortfolio.git
-cd ePortfolio
-```
+This repo is designed to move between Linux and macOS:
 
-All paths in this repo are relative — no hardcoded home-directory references in build scripts or project code. Configure database connection settings in `Database_Artifact/tech_shop/enhanced/ops/backup_config.env` for your local PostgreSQL instance.
+- All build and ops scripts use **relative paths** — no hardcoded home directories.
+- `backup_config.env` and `enhanced/api/.env` are **gitignored** — create them locally on each machine from the `.example` files.
+- Build artifacts (`*.o`, binaries, `venv/`, DB backups) are gitignored.
+
+After pulling on a new machine: copy the example configs, run `make test` in syskin, and `./verify_environment.sh` for the database.

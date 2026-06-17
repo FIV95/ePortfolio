@@ -21,7 +21,15 @@ A PostgreSQL database for a fictional tech repair business. The project starts w
 
 ## Quick start
 
-**Prerequisite:** PostgreSQL with the `original/` schema already loaded into database `tech_shop` (schema `tech`). If you are starting fresh, run the scripts in `original/` first, then continue below.
+**Prerequisite:** PostgreSQL 17+ and local config files. Copy the examples if you have not already:
+
+```bash
+cp enhanced/ops/backup_config.env.example enhanced/ops/backup_config.env
+cp enhanced/api/.env.example enhanced/api/.env
+# Edit both files with your PostgreSQL username.
+```
+
+If the `original/` schema is not loaded yet, use `setup_environment.sh` below (it runs `original/` and all enhancements). Otherwise, migrate an existing baseline with `migrate_enhanced.sh`.
 
 ### 1. Apply enhancements
 

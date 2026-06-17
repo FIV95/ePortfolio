@@ -6,7 +6,10 @@ __pycache__/
 
 # Virtual environments
 venv/
+
+# Local machine config (copy from *.example files)
 .env
+Database_Artifact/tech_shop/enhanced/ops/backup_config.env
 
 # IDE / editor
 .vscode/

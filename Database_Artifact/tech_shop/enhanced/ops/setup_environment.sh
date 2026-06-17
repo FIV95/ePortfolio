@@ -79,7 +79,7 @@ run_sql_file() {
 roles_already_exist() {
     local role_count
     role_count="$("$PSQL_BIN" -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d postgres -tAc \
-        "SELECT COUNT(*) FROM pg_roles WHERE rolname IN ('tech_login', 'admin_login', 'auditor_login', 'cs_login');")"
+        "SELECT COUNT(*) FROM pg_roles WHERE rolname IN ('tech_login', 'admin_login', 'auditor_login');")"
     [[ "$role_count" -eq 3 ]]
 }
 
