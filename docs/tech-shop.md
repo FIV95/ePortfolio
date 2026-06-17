@@ -98,8 +98,10 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 ```
 
-<div class="callout">
-<strong>Design decision:</strong> baton enforcement lives in the database — functions, triggers, and RLS — not only in application code. That guarantee survives multiple clients, scripts, and future maintainers.
+<div class="callout" markdown="1">
+
+**Design decision:** baton enforcement lives in the database — functions, triggers, and RLS — not only in application code. That guarantee survives multiple clients, scripts, and future maintainers.
+
 </div>
 
 ## Schema overview
@@ -172,6 +174,8 @@ Technician visibility is tied to session context set at login — RLS policies c
 | `run_maintenance.sh` | ANALYZE, materialized view refresh, optional VACUUM |
 | `test_all.sh` | Full suite: provision, verify, security + maintenance |
 
+</div>
+
 {% capture techshop_run %}cd Database_Artifact/tech_shop/enhanced/ops
 ./migrate_enhanced.sh --db tech_shop
 ./verify_environment.sh --db tech_shop
@@ -180,6 +184,8 @@ cd ../api
 uvicorn main:app --reload
 # Open http://127.0.0.1:8000/app{% endcapture %}
 {% include terminal-frame.html title="quick start" content=techshop_run %}
+
+<div class="container" markdown="1">
 
 ## Verification suite
 

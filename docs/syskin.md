@@ -42,6 +42,8 @@ SysKin gives one operator at a terminal a **persistent, searchable registry** �
 
 ## In action
 
+</div>
+
 {% capture syskin_help %}SysKin v0.8 - Persistent Linux Service Knowledge Base
 
 Commands:
@@ -68,6 +70,8 @@ Commands:
 ✅ All basic tests passed!{% endcapture %}
 {% include terminal-frame.html title="make test" content=syskin_test %}
 
+<div class="container" markdown="1">
+
 ## Complexity analysis
 
 | Operation | Average case | Worst case | Notes |
@@ -88,8 +92,10 @@ Commands:
 | `cli.c` | Parse commands, print help, wire user input to storage + table |
 | `syskin.c` | Entry point — load persisted data, dispatch CLI, save on exit |
 
-<div class="callout">
-<strong>Scan merge semantics:</strong> the hardest SE challenge was making <code>scan</code> discover new services <em>without wiping</em> manually added <code>--extra</code> config paths. That required careful merge logic and several test iterations — not a one-line fix.
+<div class="callout" markdown="1">
+
+**Scan merge semantics:** the hardest SE challenge was making `scan` discover new services *without wiping* manually added `--extra` config paths. That required careful merge logic and several test iterations — not a one-line fix.
+
 </div>
 
 ## Code spotlight {#fnv1a}
@@ -127,8 +133,10 @@ static bool hashtable_resize(HashTable *ht) {
 }
 ```
 
-<div class="callout">
-<strong>Trade-off:</strong> partial-match <code>lookup</code> uses an <strong>O(n)</strong> scan because substring search cannot use the hash index. I documented and accepted that cost for interactive admin usability.
+<div class="callout" markdown="1">
+
+**Trade-off:** partial-match `lookup` uses an **O(n)** scan because substring search cannot use the hash index. I documented and accepted that cost for interactive admin usability.
+
 </div>
 
 ### Public API surface
