@@ -41,7 +41,7 @@ The original **CS 300 Advising Assistant** used a hash table with separate chain
 
 ### Code analysis — areas for improvement
 
-<ul class="checklist">
+<ul class="issue-list">
   <li><strong>Structure</strong> — single monolithic C++ file; hard to test or extend</li>
   <li><strong>Hash quality</strong> — sum-of-characters produces poor distribution for real keys</li>
   <li><strong>No resize</strong> — fixed bucket count; performance degrades as data grows</li>
