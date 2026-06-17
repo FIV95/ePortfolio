@@ -14,7 +14,7 @@ I selected this artifact for the Algorithms category because it gave me the clea
 
 The original CS 300 version used a very simple **sum-of-characters hash** with separate chaining and no resizing. That was sufficient for a classroom exercise but would not perform well with real-world data.
 
-**Key algorithmic improvements:**
+#### Key algorithmic improvements
 
 | Improvement | Detail |
 |-------------|--------|
@@ -45,13 +45,13 @@ I plan to tie all five outcomes together in this professional self-assessment an
 
 Working on the algorithmic side of SysKin has been one of the most valuable parts of the capstone.
 
-**What I learned:**
+#### What I learned
 
 - Choosing the right hash function for the problem domain matters — FNV-1a made a noticeable difference in distribution
 - **Amortized analysis** clicked for me: occasional O(n) resize still yields O(1) average insert cost over many operations
 - Algorithmic improvement is not abstract — it shows up in test output and operator experience
 
-**Challenges:**
+#### Challenges
 
 - Balancing functionality with efficiency — partial-match search requires O(n) scan; I documented why that trade-off is acceptable for interactive CLI use
 - Memory safety during resize and delete while preserving user-added `extra_paths` during `scan`

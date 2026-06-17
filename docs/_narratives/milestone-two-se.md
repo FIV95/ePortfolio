@@ -14,7 +14,7 @@ I picked this artifact because it gave me the best chance to show real growth fr
 
 Administrators often struggle to track services and where config files live, especially across large systems. SysKin solves that by combining service discovery, rich data storage, and fast search in one lightweight tool.
 
-**Key improvements:**
+#### Key improvements
 
 - Converted from C++ to clean, modular C — separate files for hash table, storage, scanner, and CLI
 - Added JSON persistence so service data survives program restarts (`~/.syskin/services.json`)
@@ -41,13 +41,13 @@ I still planned to complete the Databases category and finalize reflective narra
 
 This project has been one of the most valuable learning experiences in the program. I learned how important clean modular design becomes once a project grows beyond a single file. Programming in C is meticulous — planning is key, and one small change can ripple across statically typed modules.
 
-**What I learned:**
+#### What I learned
 
 - Interface design between modules matters as much as implementation
 - Persistence forces you to think about data lifecycle (what survives a `scan` vs. what the user added manually)
 - Build and test targets are not optional for credible software
 
-**Challenges:**
+#### Challenges
 
 - Making the `scan` feature work **without erasing extra paths** users added manually — several iterations and careful testing
 - Porting STL-heavy C++ to explicit C memory management

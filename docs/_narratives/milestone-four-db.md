@@ -22,7 +22,7 @@ The database is still the main deliverable; the FastAPI layer is a thin interfac
 
 I chose this artifact because it shows something I want employers to see: I can take existing database work and improve it with **security, operations, and real workflow rules** — not just design tables on paper.
 
-**This project demonstrates:**
+#### This project demonstrates
 
 | Area | Evidence |
 |------|----------|
@@ -50,7 +50,7 @@ I do not need to change my overall outcome plan. The database category was the r
 
 The biggest takeaway: improving a database is not only about adding tables. Most of the real work was deciding **where a rule should live** — SQL, ops script, or the thin web layer.
 
-**What I learned:**
+#### What I learned
 
 - Row-level security is powerful but must be designed carefully. Early baton policies caused recursion when helper functions queried protected tables in ways PostgreSQL rejected. Refactoring those helpers fixed it.
 - PostgreSQL does not allow `VACUUM` inside SQL functions. I removed VACUUM from the in-database maintenance path and kept it as an optional admin step via `run_maintenance.sh --vacuum`.
@@ -58,7 +58,7 @@ The biggest takeaway: improving a database is not only about adding tables. Most
 - Automation scripts only stay useful if they match the live system. Security tests still expected the original ten-ticket dataset until I updated them after baton RLS replaced assignment-only access.
 - A simple `/app` page made the database approachable for non-technical roles without turning the milestone into a large application project.
 
-**Challenges:**
+#### Challenges
 
 - Matching `pg_dump` and `psql` client versions to PostgreSQL 17
 - Fixing the audit trigger to use the correct primary key on `repair_notes`

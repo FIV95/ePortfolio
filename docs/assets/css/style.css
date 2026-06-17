@@ -203,32 +203,48 @@ a:hover { text-decoration: underline; }
   margin: 1.5rem 0 0.65rem;
 }
 
-.page-content h4 {
-  margin: 1.25rem 0 0.5rem;
-}
-
 .page-content p {
-  margin: 0 0 1.15rem;
-  line-height: 1.75;
+  margin: 0 0 0.9rem;
+  line-height: 1.65;
 }
 
-.page-content ul,
-.page-content ol {
-  margin: 0 0 1.15rem;
-  padding-left: 1.4rem;
+.page-content p:has(+ ul),
+.page-content p:has(+ ol),
+.page-content p:has(+ table) {
+  margin-bottom: 0.35rem;
 }
 
-.page-content li {
-  margin-bottom: 0.4rem;
-  line-height: 1.7;
+.page-content ul:not(.checklist):not(.issue-list),
+.page-content ol:not(.checklist):not(.issue-list) {
+  margin: 0.25rem 0 0.85rem;
+  padding-left: 1.25rem;
+}
+
+.page-content ul:not(.checklist):not(.issue-list) > li,
+.page-content ol:not(.checklist):not(.issue-list) > li {
+  margin: 0;
+  padding: 0.1rem 0;
+  line-height: 1.55;
 }
 
 .page-content li > p {
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.2rem;
+  line-height: 1.55;
 }
 
 .page-content li > p:last-child {
   margin-bottom: 0;
+}
+
+.page-content h4 {
+  margin: 1rem 0 0.25rem;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.page-content h4 + ul,
+.page-content h4 + ol {
+  margin-top: 0.15rem;
 }
 
 .page-content hr {
