@@ -3,5 +3,5 @@
     <span></span><span></span><span></span>
     <em>{{ include.title | default: "terminal" }}</em>
   </div>
-  <pre class="terminal-body"><code>{{ include.content }}</code></pre>
+  <pre class="terminal-body"><code>{{ include.content | escape }}</code></pre>
 </div>

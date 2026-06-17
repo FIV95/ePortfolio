@@ -165,6 +165,7 @@ a:hover { text-decoration: underline; }
 
 .page-content .container {
   padding-top: 0;
+  white-space: normal;
 }
 
 .page-content > .container:first-child,
