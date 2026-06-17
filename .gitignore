@@ -1,0 +1,33 @@
+# Build artifacts
+*.o
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+venv/
+.env
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Database backups and logs (generated at runtime)
+Database_Artifact/tech_shop/enhanced/ops/backups/*.sql
+Database_Artifact/tech_shop/enhanced/ops/backups/*.log
+!Database_Artifact/tech_shop/enhanced/ops/backups/.gitignore
+
+# Syskin build outputs
+Software_Engineering_&_DSA_Artifact/syskin/syskin
+Software_Engineering_&_DSA_Artifact/syskin/tests/test_hashtable
+Software_Engineering_&_DSA_Artifact/syskin/tests/test_storage
+
+# Temporary / debug
+*.tmp
+core

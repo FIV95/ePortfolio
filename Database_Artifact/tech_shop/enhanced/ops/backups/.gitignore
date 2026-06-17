@@ -1,0 +1,4 @@
+# Keep backup artifacts local; retain the directory in git
+*.sql
+*.log
+!.gitignore
