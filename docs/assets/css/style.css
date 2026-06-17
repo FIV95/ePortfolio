@@ -164,24 +164,82 @@ a:hover { text-decoration: underline; }
 }
 
 .page-content .container {
-  padding-top: 2.5rem;
+  padding-top: 0;
+}
+
+.page-content > .container:first-child,
+.page-content .hero + .container {
+  padding-top: 2rem;
+}
+
+.page-content .container + .container {
+  padding-top: 0.5rem;
 }
 
 .page-content h1,
 .page-content h2,
 .page-content h3,
 .page-content h4 {
-  line-height: 1.25;
+  line-height: 1.3;
   scroll-margin-top: 5rem;
 }
 
+.page-content h1 {
+  margin: 0 0 1rem;
+}
+
 .page-content h2 {
-  margin-top: 2.5rem;
+  margin: 2rem 0 0.85rem;
   padding-bottom: 0.35rem;
   border-bottom: 1px solid var(--border);
 }
 
-.page-content h3 { margin-top: 1.75rem; }
+.page-content .container > h2:first-child,
+.page-content .container > h1:first-child {
+  margin-top: 0;
+}
+
+.page-content h3 {
+  margin: 1.5rem 0 0.65rem;
+}
+
+.page-content h4 {
+  margin: 1.25rem 0 0.5rem;
+}
+
+.page-content p {
+  margin: 0 0 1.15rem;
+  line-height: 1.75;
+}
+
+.page-content ul,
+.page-content ol {
+  margin: 0 0 1.15rem;
+  padding-left: 1.4rem;
+}
+
+.page-content li {
+  margin-bottom: 0.4rem;
+  line-height: 1.7;
+}
+
+.page-content li > p {
+  margin: 0 0 0.35rem;
+}
+
+.page-content li > p:last-child {
+  margin-bottom: 0;
+}
+
+.page-content hr {
+  margin: 2rem 0;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+.page-content .terminal-frame + .container > h2:first-child {
+  margin-top: 1.5rem;
+}
 
 .muted { color: var(--muted); }
 
