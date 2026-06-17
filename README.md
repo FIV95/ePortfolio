@@ -4,7 +4,9 @@
 **Institution:** Southern New Hampshire University  
 **Course:** CS 499 — Computer Science Capstone
 
-This repository contains my capstone artifacts, milestone narratives, and code review recordings for SNHU's ePortfolio assessment.
+**Live portfolio:** [https://fiv95.github.io/ePortfolio/](https://fiv95.github.io/ePortfolio/)
+
+This repository contains my capstone artifacts, milestone narratives, and code review recordings for SNHU's ePortfolio assessment. The published GitHub Pages site in [`docs/`](docs/) presents the self-assessment, code reviews, enhanced artifacts, and narratives in a navigable visual format.
 
 ---
 
@@ -14,7 +16,8 @@ This repository contains my capstone artifacts, milestone narratives, and code r
 |------|----------|
 | `Software_Engineering_&_DSA_Artifact/syskin/` | C service registry CLI — software engineering & data structures artifact |
 | `Database_Artifact/tech_shop/` | PostgreSQL tech repair shop database with ops scripts and FastAPI web UI |
-| `Narritives/` | Milestone narrative documents (Word / ODT) |
+| `docs/` | GitHub Pages site (Jekyll) — self-assessment, artifacts, narratives |
+| `Narritives/` | Milestone narrative documents (Word / ODT) for LMS submission |
 | `Lawrence_Francis_CS499_*_code_review.mp4` | Recorded code review walkthroughs |
 
 ---

@@ -1,0 +1,19 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="{{ site.baseurl }}/">
+      <span class="brand-mark">LF</span>
+      <span class="brand-text">
+        <strong>Lawrence Francis</strong>
+        <small>CS 499 ePortfolio</small>
+      </span>
+    </a>
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="{{ site.baseurl }}/" {% if page.permalink == "/" %}class="active"{% endif %}>Professional Self-Assessment</a>
+      <a href="{{ site.baseurl }}/code-review/" {% if page.url contains '/code-review' %}class="active"{% endif %}>Code Reviews</a>
+      <a href="{{ site.baseurl }}/syskin/" {% if page.url contains '/syskin' %}class="active"{% endif %}>SysKin</a>
+      <a href="{{ site.baseurl }}/tech-shop/" {% if page.url contains '/tech-shop' %}class="active"{% endif %}>Tech Shop</a>
+      <a href="{{ site.repo_url }}" target="_blank" rel="noopener">GitHub Repo</a>
+    </nav>
+  </div>
+</header>

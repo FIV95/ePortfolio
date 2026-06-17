@@ -1,12 +1,27 @@
-# Professional Self-Assessment
-
-**Lawrence Francis**  
-Southern New Hampshire University  
-Bachelor of Science in Computer Science  
-CS 499 — Computer Science Capstone  
-June 2026
-
 ---
+layout: default
+title: Professional Self-Assessment
+permalink: /
+description: "Professional self-assessment — formal introduction to Lawrence Francis, CS 499 ePortfolio"
+---
+
+<section class="hero">
+  <div class="container">
+    <p class="hero-eyebrow">CS 499 Capstone · Read This First</p>
+    <h1>Professional Self-Assessment</h1>
+    <p class="lede">
+      <strong>Lawrence Francis</strong> · Southern New Hampshire University · Bachelor of Science in Computer Science · CS 499 — Computer Science Capstone · June 2026
+    </p>
+    <div class="meta-row">
+      <span class="chip">1 · Professional Self-Assessment ← you are here</span>
+      <span class="chip">2 · <a href="{{ site.baseurl }}/code-review/">Code Reviews</a></span>
+      <span class="chip">3 · <a href="{{ site.baseurl }}/syskin/">SysKin</a></span>
+      <span class="chip">4 · <a href="{{ site.baseurl }}/tech-shop/">Tech Shop</a></span>
+    </div>
+  </div>
+</section>
+
+<div class="container">
 
 ## Introduction
 
@@ -15,8 +30,6 @@ Completing the Bachelor of Science in Computer Science at Southern New Hampshire
 I am positioning myself for roles in DevOps engineering and systems administration. These fields require reliable tools, secure infrastructure, clear documentation, and the ability to make complex systems understandable for the people who use and maintain them. The two enhanced artifacts in this portfolio, SysKin and the Tech Repair Shop database, reflect that direction from different angles. SysKin is a lightweight systems utility designed for Linux administrators, while the Tech Repair Shop is an operations-focused PostgreSQL environment with security, workflow rules, automation, and role-based access built into its design.
 
 This self-assessment introduces who I am as a computer science professional, summarizes the skills I developed throughout the program, and explains how my artifacts work together to demonstrate the full range of my capabilities.
-
----
 
 ## How the Program and ePortfolio Shaped My Professional Identity
 
@@ -70,8 +83,6 @@ In the Tech Repair Shop, security is more visible and central. I removed relianc
 
 A lesson I will carry into industry is that security is strongest when it is designed into the system early and enforced consistently. A polished user interface cannot compensate for weak data access rules. Likewise, a fast command-line tool is not professional if it leaks memory or corrupts persisted data. My portfolio demonstrates both layers of that thinking.
 
----
-
 ## How My Artifacts Fit Together
 
 Although this ePortfolio includes enhancements in three required categories — software design and engineering, algorithms and data structures, and databases — I chose to pursue those categories through two artifacts rather than three separate projects. That decision gave me depth instead of surface coverage.
@@ -84,7 +95,27 @@ Viewed together, the artifacts show a useful professional combination. I can bui
 
 That combination is the core of my employability argument. I am not presenting myself as someone who only writes application code or someone who only runs scripts. I am presenting myself as someone who can move between layers — application, data, and operations — and make disciplined decisions at each one.
 
----
+### Explore the artifacts
+
+<div class="card-grid">
+  <a class="artifact-card" href="{{ site.baseurl }}/code-review/">
+    <h3>Code Review Videos</h3>
+    <p>Informal walkthroughs — existing functionality, code analysis, and enhancement plans.</p>
+  </a>
+  <a class="artifact-card" href="{{ site.baseurl }}/syskin/">
+    <h3>SysKin</h3>
+    <p>Software engineering + algorithms — modular C service registry for Linux administrators.</p>
+    <div class="tag-row">
+      <span class="tag">Software Engineering</span>
+      <span class="tag">Algorithms & DSA</span>
+    </div>
+  </a>
+  <a class="artifact-card" href="{{ site.baseurl }}/tech-shop/">
+    <h3>Tech Repair Shop</h3>
+    <p>Databases — secure PostgreSQL with baton workflow, audit logging, and ops automation.</p>
+    <div class="tag-row"><span class="tag">Databases</span></div>
+  </a>
+</div>
 
 ## Strengths, Goals, and Readiness for the Field
 
@@ -96,12 +127,12 @@ My near-term professional goal is to join a team where I can contribute to infra
 
 This capstone helped shape that goal by forcing me to connect classroom foundations to professional standards. I entered the program needing to learn how the pieces fit. I am leaving it with evidence that I can integrate them.
 
----
-
 ## Closing Reflection
 
 The ePortfolio process itself was one of the most valuable parts of CS 499. It required me to look at older work without disowning it, identify honest weaknesses, improve the work methodically, and explain the improvement in language that matters to employers and collaborators. That is different from passing a single module assignment. It is the skill of presenting a career narrative supported by real artifacts.
 
 I am proud of the distance between my original CS 300 hash table and the current SysKin utility. I am equally proud of the distance between my first repair-shop schema and the secure, auditable, role-aware database system I am submitting now. Neither artifact is finished in the abstract sense. Both are the kind of projects I would continue improving in industry. However, both demonstrate the standard of work I intend to bring with me.
 
-This portfolio is my introduction. The artifacts that follow are the proof.
+**This portfolio is my introduction. The artifacts that follow are the proof.**
+
+</div>

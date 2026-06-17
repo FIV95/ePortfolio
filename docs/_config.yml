@@ -1,0 +1,17 @@
+title: "Lawrence Francis — CS 499 ePortfolio"
+description: "DevOps & Systems Administration — SNHU Computer Science Capstone"
+baseurl: "/ePortfolio"
+url: "https://fiv95.github.io"
+repo_url: "https://github.com/FIV95/ePortfolio"
+repo_raw: "https://github.com/FIV95/ePortfolio/raw/main"
+author: "Lawrence Francis"
+theme: null
+markdown: kramdown
+kramdown:
+  syntax_highlighter: rouge
+  input: GFM
+  hard_wrap: false
+plugins: []
+exclude:
+  - Gemfile
+  - Gemfile.lock

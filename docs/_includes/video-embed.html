@@ -1,0 +1,14 @@
+{% assign video_src = site.repo_raw | append: '/' | append: include.filename %}
+<div class="video-block">
+  <h3>{{ include.title }}</h3>
+  {% if include.description %}<p class="muted">{{ include.description }}</p>{% endif %}
+  <video controls preload="metadata" {% if include.poster %}poster="{{ site.baseurl }}/assets/img/{{ include.poster }}"{% endif %}>
+    <source src="{{ video_src }}" type="video/mp4">
+    Your browser does not support embedded video.
+  </video>
+  <p class="video-actions">
+    <a href="{{ video_src }}" download>Download MP4</a>
+    ·
+    <a href="{{ site.repo_url }}/blob/main/{{ include.filename }}" target="_blank" rel="noopener">View in repository</a>
+  </p>
+</div>
