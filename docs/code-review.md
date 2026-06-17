@@ -87,7 +87,7 @@ The original **Tech Repair Shop** baseline included six normalized tables (custo
 
 ### Code analysis — areas for improvement
 
-<ul class="checklist">
+<ul class="issue-list">
   <li><strong>Security</strong> — simple role grants; no RLS, no encryption, plaintext-era assumptions</li>
   <li><strong>Scale</strong> — ten seed tickets; not representative of shop operations</li>
   <li><strong>No audit trail</strong> — changes not tracked for compliance or troubleshooting</li>

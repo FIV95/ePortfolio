@@ -426,6 +426,25 @@ tr:nth-child(even) td { background: rgba(255, 255, 255, 0.02); }
   font-weight: 700;
 }
 
+.issue-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.issue-list li {
+  padding: 0.45rem 0 0.45rem 1.6rem;
+  position: relative;
+}
+
+.issue-list li::before {
+  content: "✗";
+  position: absolute;
+  left: 0;
+  color: #f85149;
+  font-weight: 700;
+}
+
 .arch-diagram {
   margin: 1.5rem 0;
   padding: 1.25rem;
