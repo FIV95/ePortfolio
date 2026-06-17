@@ -48,9 +48,9 @@ SysKin gives one operator at a terminal a **persistent, searchable registry** â€
 
 Commands:
   list                          List all known services
-  lookup &lt;name&gt;                 Find service details (partial match)
-  add &lt;name&gt; &lt;config_path&gt; "&lt;desc&gt;" [status] [--extra &lt;path1&gt; ...]
-  delete &lt;name&gt;                 Remove service
+  lookup <name>                 Find service details (partial match)
+  add <name> <config_path> "<desc>" [status] [--extra <path1> ...]
+  delete <name>                 Remove service
   scan                          Auto-discover ALL services from systemd
   --help                        Show this help{% endcapture %}
 {% include terminal-frame.html title="syskin â€” help" content=syskin_help %}
