@@ -5,7 +5,7 @@ permalink: /tech-shop/
 description: "Database artifact — secure PostgreSQL repair shop with baton workflow and ops automation"
 ---
 
-<div class="container">
+<div class="container" markdown="1">
 
 # Tech Repair Shop — PostgreSQL Database System
 

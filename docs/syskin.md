@@ -5,7 +5,7 @@ permalink: /syskin/
 description: "Software Engineering and Algorithms & Data Structures artifact — persistent Linux service registry"
 ---
 
-<div class="container">
+<div class="container" markdown="1">
 
 # SysKin — Persistent Linux Service Knowledge Base
 

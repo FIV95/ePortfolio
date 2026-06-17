@@ -5,7 +5,7 @@ permalink: /code-review/
 description: "Informal code review walkthrough videos for SysKin and Tech Repair Shop"
 ---
 
-<div class="container">
+<div class="container" markdown="1">
 
 # Informal Code Reviews
 

@@ -21,7 +21,7 @@ description: "Professional self-assessment — formal introduction to Lawrence F
   </div>
 </section>
 
-<div class="container">
+<div class="container" markdown="1">
 
 ## Introduction
 
