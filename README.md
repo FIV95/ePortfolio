@@ -17,7 +17,7 @@ This repository contains my capstone artifacts, milestone narratives, and code r
 | `Software_Engineering_&_DSA_Artifact/syskin/` | C service registry CLI — software engineering & data structures artifact |
 | `Database_Artifact/tech_shop/` | PostgreSQL tech repair shop database with ops scripts and FastAPI web UI |
 | `docs/` | GitHub Pages site (Jekyll) — self-assessment, artifacts, narratives |
-| `Narritives/` | Milestone narrative documents (Word / ODT) for LMS submission |
+| `Narratives/` | Milestone narrative documents (Word / ODT) for LMS submission |
 | `Lawrence_Francis_CS499_*_code_review.mp4` | Recorded code review walkthroughs |
 
 ---
@@ -49,7 +49,7 @@ PG_BIN_DIR=/opt/homebrew/opt/postgresql@17/bin
 
 ---
 
-## Software Engineering & DSA — Syskin
+## Software Engineering & DSA — SysKin
 
 A POSIX C application that scans systemd unit files and stores discovered services in a hash table backed by JSON persistence.
 

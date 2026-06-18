@@ -21,6 +21,9 @@ Database_Artifact/tech_shop/enhanced/ops/backup_config.env
 .DS_Store
 Thumbs.db
 
+# LibreOffice lock files
+.~lock.*
+
 # Database backups and logs (generated at runtime)
 Database_Artifact/tech_shop/enhanced/ops/backups/*.sql
 Database_Artifact/tech_shop/enhanced/ops/backups/*.log
