@@ -30,35 +30,7 @@ A normalized **PostgreSQL** database for a fictional tech repair business — ex
 
 ## Architecture
 
-</div>
-
-<div class="arch-flow">
-  <div class="arch-tier">
-    <div class="arch-node arch-node--actors">Staff <span class="arch-roles">CS · Tech · Admin · Auditor</span></div>
-  </div>
-  <div class="arch-connector arch-connector--down" aria-hidden="true"></div>
-  <div class="arch-tier arch-tier--main">
-    <div class="arch-branch">
-      <div class="arch-node arch-node--api">FastAPI <code>/app</code></div>
-      <p class="arch-caption">JWT auth · role-scoped DB login</p>
-      <div class="arch-connector arch-connector--down" aria-hidden="true"></div>
-      <div class="arch-node arch-node--ops">enhanced/ops scripts</div>
-      <p class="arch-caption">migrate · verify · backup · restore · test</p>
-    </div>
-    <div class="arch-connector arch-connector--across" aria-hidden="true"><span>role-scoped connection</span></div>
-    <div class="arch-branch">
-      <div class="arch-node arch-node--db">PostgreSQL <code>tech_shop</code></div>
-      <div class="arch-features">
-        <span class="arch-feature">RLS policies</span>
-        <span class="arch-feature">audit triggers</span>
-        <span class="arch-feature">baton functions</span>
-        <span class="arch-feature">maintenance_log</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container" markdown="1">
+{% include tech-shop-architecture.html %}
 
 The database enforces workflow and security rules. The `/app` layer stays intentionally thin so the milestone stays focused on database competence.
 

@@ -1,0 +1,39 @@
+<div class="video-block arch-map">
+  <div class="arch-map__layer arch-map__layer--staff">
+    <p class="arch-map__label">Users</p>
+    <div class="tag-row">
+      <span class="tag">Customer service</span>
+      <span class="tag">Technician</span>
+      <span class="tag">Administrator</span>
+      <span class="tag">Auditor</span>
+    </div>
+  </div>
+
+  <p class="arch-map__bridge">authenticated access — web UI or ops tooling</p>
+
+  <div class="split-compare">
+    <div class="compare-panel">
+      <h4>FastAPI <code>/app</code></h4>
+      <p class="muted">Thin browser UI for front-desk and technician workflows.</p>
+      <p class="muted">JWT session → PostgreSQL login role (<code>cs_login</code>, <code>tech_login</code>, …)</p>
+    </div>
+    <div class="compare-panel">
+      <h4><code>enhanced/ops</code> scripts</h4>
+      <p class="muted">Shell automation for provisioning, verification, and recovery.</p>
+      <p class="muted"><code>migrate</code> · <code>verify</code> · <code>backup</code> · <code>restore</code> · <code>test</code></p>
+    </div>
+  </div>
+
+  <p class="arch-map__bridge">both paths connect with role-scoped PostgreSQL credentials</p>
+
+  <div class="compare-panel arch-map__core">
+    <h4>PostgreSQL <code>tech_shop</code> · <code>tech</code> schema</h4>
+    <p class="muted">Workflow rules, security, and audit enforcement live here — not only in application code.</p>
+    <div class="tag-row">
+      <span class="tag">RLS policies</span>
+      <span class="tag">baton functions</span>
+      <span class="tag">audit triggers</span>
+      <span class="tag">maintenance_log</span>
+    </div>
+  </div>
+</div>
